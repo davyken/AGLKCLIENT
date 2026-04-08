@@ -1,11 +1,28 @@
 'use client';
 
 import Link from 'next/link';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [adminCode, setAdminCode] = useState('');
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  const handleAdminLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (adminCode === 'AGLK2026') {
+      setIsAdmin(true);
+      localStorage.setItem('aglk_admin', 'true');
+    } else {
+      alert('Invalid code');
+    }
+  };
+
+  useEffect(() => {
+    const stored = localStorage.getItem('aglk_admin');
+    if (stored === 'true') setIsAdmin(true);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
@@ -27,12 +44,23 @@ export default function Home() {
             </div>
           </div>
           <div className="flex items-center gap-2">
-            <Link 
-              href="/auth" 
-              className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium rounded-lg transition"
-            >
-              Get Started
-            </Link>
+            {isAdmin ? (
+              <Link 
+                href="/auth" 
+                className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium rounded-lg transition"
+              >
+                Get Started
+              </Link>
+            ) : (
+              <a 
+                href="https://wa.me/15551661836" 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium rounded-lg transition"
+              >
+                Launch App
+              </a>
+            )}
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="sm:hidden p-2 text-gray-400 hover:text-white"
@@ -49,6 +77,11 @@ export default function Home() {
             <a href="#about" className="block text-gray-400 hover:text-white transition text-sm py-2">About</a>
             <a href="#features" className="block text-gray-400 hover:text-white transition text-sm py-2">Features</a>
             <a href="#contact" className="block text-gray-400 hover:text-white transition text-sm py-2">Contact</a>
+            {isAdmin ? (
+              <Link href="/auth" className="block text-emerald-400 hover:text-white transition text-sm py-2">Get Started</Link>
+            ) : (
+              <a href="https://wa.me/15551661836" target="_blank" rel="noopener noreferrer" className="block text-emerald-400 hover:text-white transition text-sm py-2">Launch App</a>
+            )}
           </div>
         )}
       </nav>
@@ -70,14 +103,16 @@ export default function Home() {
                 and grow your agricultural business with AI-powered insights.
               </p>
               <div className="flex flex-wrap gap-4 sm:gap-6">
-                <a 
-                  href="https://wa.me/15551661836" 
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-6 sm:px-8 py-3 sm:py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition text-base sm:text-lg"
-                >
-                  Launch App
-                </a>
+                {!isAdmin && (
+                  <a 
+                    href="https://wa.me/15551661836" 
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-6 sm:px-8 py-3 sm:py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition text-base sm:text-lg"
+                  >
+                    Launch App
+                  </a>
+                )}
                 <a 
                   href="https://docs.google.com/document/d/1KEBYLReFKUvULvB8uEQCu5NyaEgjDMYduOH7zXOJNNw/edit?tab=t.0#heading=h.quv1v01so6ux" 
                   target="_blank"
@@ -280,7 +315,7 @@ export default function Home() {
       <section className="pt-24 sm:pt-40 pb-12 sm:pb-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
-            <div className="sm:col-span-2 lg:col-span-2">
+            <div className="sm:col-span-2 lg:col-span-1">
               <div className="flex items-center gap-3 mb-4">           
                  <img 
                   src="/agrolink_logo_compressed.png" 
@@ -311,6 +346,26 @@ export default function Home() {
                 <li><a href="#" className="hover:text-white transition">Support</a></li>
               </ul>
             </div>
+            {!isAdmin && (
+              <div>
+                <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Admin Access</h4>
+                <form onSubmit={handleAdminLogin} className="flex gap-2">
+                  <input
+                    type="password"
+                    value={adminCode}
+                    onChange={(e) => setAdminCode(e.target.value)}
+                    placeholder="Enter code"
+                    className="px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white text-sm placeholder-gray-500 focus:outline-none focus:border-emerald-500 w-32"
+                  />
+                  <button
+                    type="submit"
+                    className="px-3 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-medium rounded-lg transition"
+                  >
+                    Login
+                  </button>
+                </form>
+              </div>
+            )}
           </div>
           <div className="border-t border-gray-800 mt-10 sm:mt-12 pt-6 sm:pt-8 text-center text-gray-500 text-xs sm:text-sm">
             © 2026 AGLK. Built with NestJS & Next.js
