@@ -251,7 +251,7 @@ export default function ListingsPage() {
                       <td className="px-4 sm:px-6 py-4 text-gray-500 text-sm">
                         {new Date(listing.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="px-4 sm:px-6 py-4">
+                      <td className="px-4 sm:px-6 py-4 overflow-visible">
                         <div className="relative">
                           <button
                             onClick={(e) => {

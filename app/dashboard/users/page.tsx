@@ -208,7 +208,7 @@ export default function UsersPage() {
                         </span>
                       </td>
                       <td className="px-4 sm:px-6 py-4 text-gray-400">{user.preferredChannel || '-'}</td>
-                      <td className="px-4 sm:px-6 py-4">
+                      <td className="px-4 sm:px-6 py-4 overflow-visible">
                         <div className="relative">
                           <button
                             onClick={(e) => {
