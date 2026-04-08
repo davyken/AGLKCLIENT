@@ -46,15 +46,6 @@ export default function ListingsPage() {
   });
 
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      const t = e.target as HTMLElement;
-      if (!t.closest('.menu-dropdown')) setMenuOpen(null);
-    };
-    document.addEventListener('click', handler);
-    return () => document.removeEventListener('click', handler);
-  }, []);
-
-  useEffect(() => {
     fetchListings();
   }, []);
 
@@ -214,8 +205,8 @@ export default function ListingsPage() {
             No listings found
           </div>
         ) : (
-          <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
-            <div className="overflow-x-auto">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl">
+            <div className="overflow-x-visible">
               <table className="w-full">
                 <thead className="bg-gray-800 border-b border-gray-700">
                   <tr>
@@ -251,8 +242,8 @@ export default function ListingsPage() {
                       <td className="px-4 sm:px-6 py-4 text-gray-500 text-sm">
                         {new Date(listing.createdAt).toLocaleDateString()}
                       </td>
-                      <td className="px-4 sm:px-6 py-4 overflow-visible">
-                        <div className="relative">
+                      <td className="px-4 sm:px-6 py-4">
+                        <div className="relative inline-block">
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -267,7 +258,7 @@ export default function ListingsPage() {
                             </svg>
                           </button>
                           {menuOpen === listing._id && (
-                            <div className="menu-dropdown absolute right-0 mt-1 w-28 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-10">
+                            <div className="absolute right-0 mt-1 w-28 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-[100]">
                               <button onClick={(e) => { e.stopPropagation(); handleEdit(listing); }} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Edit</button>
                               <button onClick={(e) => { e.stopPropagation(); handleDelete(listing._id); }} className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700">Delete</button>
                             </div>

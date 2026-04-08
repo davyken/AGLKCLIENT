@@ -31,15 +31,6 @@ export default function UsersPage() {
   const [editForm, setEditForm] = useState({ name: '', location: '', role: '' });
 
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      const t = e.target as HTMLElement;
-      if (!t.closest('.menu-dropdown')) setMenuOpen(null);
-    };
-    document.addEventListener('click', handler);
-    return () => document.removeEventListener('click', handler);
-  }, []);
-
-  useEffect(() => {
     fetchUsers();
   }, []);
 
@@ -177,8 +168,8 @@ export default function UsersPage() {
             No users found
           </div>
         ) : (
-          <div className="bg-gray-900 border border-gray-800 rounded-xl overflow-hidden">
-            <div className="overflow-x-auto">
+          <div className="bg-gray-900 border border-gray-800 rounded-xl">
+            <div className="overflow-x-visible">
               <table className="w-full">
                 <thead className="bg-gray-800 border-b border-gray-700">
                   <tr>
@@ -208,8 +199,8 @@ export default function UsersPage() {
                         </span>
                       </td>
                       <td className="px-4 sm:px-6 py-4 text-gray-400">{user.preferredChannel || '-'}</td>
-                      <td className="px-4 sm:px-6 py-4 overflow-visible">
-                        <div className="relative">
+                      <td className="px-4 sm:px-6 py-4">
+                        <div className="relative inline-block">
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -224,7 +215,7 @@ export default function UsersPage() {
                             </svg>
                           </button>
                           {menuOpen === user._id && (
-                            <div className="menu-dropdown absolute right-0 mt-1 w-32 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-10">
+                            <div className="absolute right-0 mt-1 w-32 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-[100]">
                               <button onClick={(e) => { e.stopPropagation(); handleEdit(user); }} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Edit</button>
                               <button onClick={(e) => { e.stopPropagation(); handleBan(user.phone); }} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Ban</button>
                               <button onClick={(e) => { e.stopPropagation(); handleDelete(user.phone); }} className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700">Delete</button>
