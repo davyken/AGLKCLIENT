@@ -27,6 +27,17 @@ export default function UsersPage() {
   const [roleFilter, setRoleFilter] = useState<'all' | 'farmer' | 'buyer'>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [menuOpen, setMenuOpen] = useState<string | null>(null);
+  const [editModal, setEditModal] = useState<User | null>(null);
+  const [editForm, setEditForm] = useState({ name: '', location: '', role: '' });
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      const t = e.target as HTMLElement;
+      if (!t.closest('.menu-dropdown')) setMenuOpen(null);
+    };
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
+  }, []);
 
   useEffect(() => {
     fetchUsers();
@@ -45,6 +56,54 @@ export default function UsersPage() {
       setError('Failed to fetch users');
     } finally {
       setLoading(false);
+    }
+};
+  
+  const handleEdit = (user: User) => {
+    setEditModal(user);
+    setEditForm({ name: user.name || '', location: user.location || '', role: user.role || '' });
+    setMenuOpen(null);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editModal) return;
+    try {
+      const res = await fetch(`${API_BASE}/users/${editModal.phone}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(editForm)
+      });
+      if (res.ok) {
+        fetchUsers();
+        setEditModal(null);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleBan = async (phone: string) => {
+    try {
+      const res = await fetch(`${API_BASE}/users/${phone}/ban`, { method: 'PUT' });
+      if (res.ok) {
+        fetchUsers();
+        setMenuOpen(null);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleDelete = async (phone: string) => {
+    if (!confirm('Are you sure you want to delete this user? This action cannot be undone.')) return;
+    try {
+      const res = await fetch(`${API_BASE}/users/${phone}`, { method: 'DELETE' });
+      if (res.ok) {
+        fetchUsers();
+        setMenuOpen(null);
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -129,6 +188,7 @@ export default function UsersPage() {
                     <th className="text-left px-4 sm:px-6 py-3 text-sm font-medium text-gray-400">Location</th>
                     <th className="text-left px-4 sm:px-6 py-3 text-sm font-medium text-gray-400">Trust</th>
                     <th className="text-left px-4 sm:px-6 py-3 text-sm font-medium text-gray-400">Channel</th>
+                    <th className="text-left px-4 sm:px-6 py-3 text-sm font-medium text-gray-400">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-800">
@@ -148,6 +208,30 @@ export default function UsersPage() {
                         </span>
                       </td>
                       <td className="px-4 sm:px-6 py-4 text-gray-400">{user.preferredChannel || '-'}</td>
+                      <td className="px-4 sm:px-6 py-4">
+                        <div className="relative">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setMenuOpen(menuOpen === user._id ? null : user._id);
+                            }}
+                            className="p-1 text-gray-400 hover:text-white"
+                          >
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                              <circle cx="12" cy="5" r="2"/>
+                              <circle cx="12" cy="12" r="2"/>
+                              <circle cx="12" cy="19" r="2"/>
+                            </svg>
+                          </button>
+                          {menuOpen === user._id && (
+                            <div className="menu-dropdown absolute right-0 mt-1 w-32 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-10">
+                              <button onClick={(e) => { e.stopPropagation(); handleEdit(user); }} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Edit</button>
+                              <button onClick={(e) => { e.stopPropagation(); handleBan(user.phone); }} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Ban</button>
+                              <button onClick={(e) => { e.stopPropagation(); handleDelete(user.phone); }} className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700">Delete</button>
+                            </div>
+                          )}
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -159,6 +243,59 @@ export default function UsersPage() {
         <div className="mt-4 text-sm text-gray-500">
           Showing {filteredUsers.length} of {users.length} users
         </div>
+
+        {editModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 w-full max-w-md">
+              <h3 className="text-xl font-bold text-white mb-4">Edit User</h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Name</label>
+                  <input
+                    type="text"
+                    value={editForm.name}
+                    onChange={(e) => setEditForm({ ...editForm, name: e.target.value })}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Location</label>
+                  <input
+                    type="text"
+                    value={editForm.location}
+                    onChange={(e) => setEditForm({ ...editForm, location: e.target.value })}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Role</label>
+                  <select
+                    value={editForm.role}
+                    onChange={(e) => setEditForm({ ...editForm, role: e.target.value })}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                  >
+                    <option value="farmer">Farmer</option>
+                    <option value="buyer">Buyer</option>
+                  </select>
+                </div>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={handleSaveEdit}
+                  className="flex-1 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition"
+                >
+                  Save Changes
+                </button>
+                <button
+                  onClick={() => setEditModal(null)}
+                  className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

@@ -40,47 +40,19 @@ export default function DashboardLayout({
                 <img 
                   src="/agrolink_logo_compressed.png" 
                   alt="Agrolink" 
-                  className="w-20 h-20 object-contain"
+                  className="w-16 sm:w-20 h-16 sm:h-20 object-contain"
                 />
               </Link>
             </div>
-            <div className="flex justify-center gap-8">
-              <Link 
-                href="/" 
-                className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              >
-                Home
-              </Link>
-              <Link 
-                href="/about" 
-                className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              >
-                About
-              </Link>
-              <Link 
-                href="/dashboard" 
-                className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              >
-                Dashboard
-              </Link>
-              <Link 
-                href="/dashboard/listings" 
-                className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              >
-                Listings
-              </Link>
-              <Link 
-                href="/dashboard/users" 
-                className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              >
-                Users
-              </Link>
-              <Link 
-                href="/contact" 
-                className="text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              >
-                Contact Us
-              </Link>
+            <div className="hidden lg:flex absolute left-1/2 transform -translate-x-1/2">
+              <div className="flex items-center gap-4">
+                <Link href="/" className="text-gray-300 hover:text-white px-2 py-2 text-sm font-medium">Home</Link>
+                <Link href="/about" className="text-gray-300 hover:text-white px-2 py-2 text-sm font-medium">About</Link>
+                <Link href="/dashboard" className="text-gray-300 hover:text-white px-2 py-2 text-sm font-medium">Dashboard</Link>
+                <Link href="/dashboard/listings" className="text-gray-300 hover:text-white px-2 py-2 text-sm font-medium">Listings</Link>
+                <Link href="/dashboard/users" className="text-gray-300 hover:text-white px-2 py-2 text-sm font-medium">Users</Link>
+                <Link href="/contact" className="text-gray-300 hover:text-white px-2 py-2 text-sm font-medium">Contact Us</Link>
+              </div>
             </div>
             <div className="flex justify-end items-center gap-2">
               <button 
@@ -97,7 +69,7 @@ export default function DashboardLayout({
               </button>
               <button 
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 text-gray-400 hover:text-white"
+                className="lg:hidden p-2 text-gray-400 hover:text-white"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -107,49 +79,13 @@ export default function DashboardLayout({
           </div>
         </div>
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-gray-800 px-4 py-3 space-y-2">
-            <Link 
-              href="/" 
-              className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link 
-              href="/about" 
-              className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              About
-            </Link>
-            <Link 
-              href="/dashboard" 
-              className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Dashboard
-            </Link>
-            <Link 
-              href="/dashboard/listings" 
-              className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Listings
-            </Link>
-            <Link 
-              href="/dashboard/users" 
-              className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Users
-            </Link>
-            <Link 
-              href="/contact" 
-              className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              Contact Us
-            </Link>
+          <div className="lg:hidden border-t border-gray-800 px-4 py-3 space-y-2">
+            <Link href="/" className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>Home</Link>
+            <Link href="/about" className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>About</Link>
+            <Link href="/dashboard" className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
+            <Link href="/dashboard/listings" className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>Listings</Link>
+            <Link href="/dashboard/users" className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>Users</Link>
+            <Link href="/contact" className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>Contact Us</Link>
           </div>
         )}
       </nav>

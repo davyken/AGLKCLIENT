@@ -18,26 +18,118 @@ interface Listing {
   createdAt: string;
 }
 
+interface ListingFormData {
+  type: string;
+  product: string;
+  quantity: number;
+  unit: string;
+  price: number | null;
+  location: string;
+}
+
 export default function ListingsPage() {
   const [listings, setListings] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [filter, setFilter] = useState<'all' | 'sell' | 'buy'>('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [menuOpen, setMenuOpen] = useState<string | null>(null);
+  const [createModal, setCreateModal] = useState(false);
+  const [editModal, setEditModal] = useState<Listing | null>(null);
+  const [formData, setFormData] = useState<ListingFormData>({
+    type: 'sell',
+    product: '',
+    quantity: 1,
+    unit: 'kg',
+    price: null,
+    location: ''
+  });
 
   useEffect(() => {
-    fetch(`${API_BASE}/listing`)
-      .then(res => res.json())
-      .then(data => {
-        const listingsArr: Listing[] = Array.isArray(data) ? data : (data as any).data || [];
-        setListings(listingsArr);
-        setLoading(false);
-      })
-      .catch(err => {
-        setError(err.message || 'Failed to fetch listings');
-        setLoading(false);
-      });
+    const handler = (e: MouseEvent) => {
+      const t = e.target as HTMLElement;
+      if (!t.closest('.menu-dropdown')) setMenuOpen(null);
+    };
+    document.addEventListener('click', handler);
+    return () => document.removeEventListener('click', handler);
   }, []);
+
+  useEffect(() => {
+    fetchListings();
+  }, []);
+
+  const fetchListings = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/listing`);
+      const data = await res.json();
+      const listingsArr: Listing[] = Array.isArray(data) ? data : (data as any).data || [];
+      setListings(listingsArr);
+      setLoading(false);
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to fetch listings');
+      setLoading(false);
+    }
+  };
+
+  const handleCreate = async () => {
+    try {
+      const res = await fetch(`${API_BASE}/listing`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      if (res.ok) {
+        fetchListings();
+        setCreateModal(false);
+        setFormData({ type: 'sell', product: '', quantity: 1, unit: 'kg', price: null, location: '' });
+      }
+    } catch (err: unknown) {
+      console.error(err);
+    }
+  };
+
+  const handleEdit = (listing: Listing) => {
+    setEditModal(listing);
+    setFormData({
+      type: listing.type,
+      product: listing.product,
+      quantity: listing.quantity,
+      unit: listing.unit || 'kg',
+      price: listing.price,
+      location: listing.location || ''
+    });
+    setMenuOpen(null);
+  };
+
+  const handleSaveEdit = async () => {
+    if (!editModal) return;
+    try {
+      const res = await fetch(`${API_BASE}/listing/${editModal._id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      if (res.ok) {
+        fetchListings();
+        setEditModal(null);
+      }
+    } catch (err: unknown) {
+      console.error(err);
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    if (!confirm('Are you sure you want to delete this listing?')) return;
+    try {
+      const res = await fetch(`${API_BASE}/listing/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+        fetchListings();
+        setMenuOpen(null);
+      }
+    } catch (err: unknown) {
+      console.error(err);
+    }
+  };
 
   const filteredListings = listings.filter(l => {
     if (filter !== 'all' && l.type !== filter) return false;
@@ -109,6 +201,12 @@ export default function ListingsPage() {
               <option value="cancelled">Cancelled</option>
             </select>
           </div>
+          <button
+            onClick={() => setCreateModal(true)}
+            className="px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition"
+          >
+            + Add Listing
+          </button>
         </div>
 
         {filteredListings.length === 0 ? (
@@ -128,6 +226,7 @@ export default function ListingsPage() {
                     <th className="text-left px-4 sm:px-6 py-3 text-sm font-medium text-gray-400">Location</th>
                     <th className="text-left px-4 sm:px-6 py-3 text-sm font-medium text-gray-400">Status</th>
                     <th className="text-left px-4 sm:px-6 py-3 text-sm font-medium text-gray-400">Date</th>
+                    <th className="text-left px-4 sm:px-6 py-3 text-sm font-medium text-gray-400">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-800">
@@ -152,6 +251,29 @@ export default function ListingsPage() {
                       <td className="px-4 sm:px-6 py-4 text-gray-500 text-sm">
                         {new Date(listing.createdAt).toLocaleDateString()}
                       </td>
+                      <td className="px-4 sm:px-6 py-4">
+                        <div className="relative">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setMenuOpen(menuOpen === listing._id ? null : listing._id);
+                            }}
+                            className="p-1 text-gray-400 hover:text-white"
+                          >
+                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                              <circle cx="12" cy="5" r="2"/>
+                              <circle cx="12" cy="12" r="2"/>
+                              <circle cx="12" cy="19" r="2"/>
+                            </svg>
+                          </button>
+                          {menuOpen === listing._id && (
+                            <div className="menu-dropdown absolute right-0 mt-1 w-28 bg-gray-800 border border-gray-700 rounded-lg shadow-lg z-10">
+                              <button onClick={(e) => { e.stopPropagation(); handleEdit(listing); }} className="block w-full text-left px-4 py-2 text-sm text-gray-300 hover:bg-gray-700">Edit</button>
+                              <button onClick={(e) => { e.stopPropagation(); handleDelete(listing._id); }} className="block w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-gray-700">Delete</button>
+                            </div>
+                          )}
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -163,6 +285,174 @@ export default function ListingsPage() {
         <div className="mt-4 text-sm text-gray-500">
           Showing {filteredListings.length} of {listings.length} listings
         </div>
+
+        {createModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 w-full max-w-md">
+              <h3 className="text-xl font-bold text-white mb-4">Create Listing</h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Type</label>
+                  <select
+                    value={formData.type}
+                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                  >
+                    <option value="sell">Sell</option>
+                    <option value="buy">Buy</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Product</label>
+                  <input
+                    type="text"
+                    value={formData.product}
+                    onChange={(e) => setFormData({ ...formData, product: e.target.value })}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                    placeholder="e.g. Tomatoes"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-1">Quantity</label>
+                    <input
+                      type="number"
+                      value={formData.quantity}
+                      onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) || 0 })}
+                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-1">Unit</label>
+                    <input
+                      type="text"
+                      value={formData.unit}
+                      onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
+                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                      placeholder="e.g. kg"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Price (XAF)</label>
+                  <input
+                    type="number"
+                    value={formData.price || ''}
+                    onChange={(e) => setFormData({ ...formData, price: e.target.value ? parseInt(e.target.value) : null })}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                    placeholder="e.g. 5000"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Location</label>
+                  <input
+                    type="text"
+                    value={formData.location}
+                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                    placeholder="e.g. Douala"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={handleCreate}
+                  className="flex-1 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition"
+                >
+                  Create
+                </button>
+                <button
+                  onClick={() => { setCreateModal(false); setFormData({ type: 'sell', product: '', quantity: 1, unit: 'kg', price: null, location: '' }); }}
+                  className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {editModal && (
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 w-full max-w-md">
+              <h3 className="text-xl font-bold text-white mb-4">Edit Listing</h3>
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Type</label>
+                  <select
+                    value={formData.type}
+                    onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                  >
+                    <option value="sell">Sell</option>
+                    <option value="buy">Buy</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Product</label>
+                  <input
+                    type="text"
+                    value={formData.product}
+                    onChange={(e) => setFormData({ ...formData, product: e.target.value })}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                  />
+                </div>
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-1">Quantity</label>
+                    <input
+                      type="number"
+                      value={formData.quantity}
+                      onChange={(e) => setFormData({ ...formData, quantity: parseInt(e.target.value) || 0 })}
+                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-400 mb-1">Unit</label>
+                    <input
+                      type="text"
+                      value={formData.unit}
+                      onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
+                      className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Price (XAF)</label>
+                  <input
+                    type="number"
+                    value={formData.price || ''}
+                    onChange={(e) => setFormData({ ...formData, price: e.target.value ? parseInt(e.target.value) : null })}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-400 mb-1">Location</label>
+                  <input
+                    type="text"
+                    value={formData.location}
+                    onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                    className="w-full px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white"
+                  />
+                </div>
+              </div>
+              <div className="flex gap-3 mt-6">
+                <button
+                  onClick={handleSaveEdit}
+                  className="flex-1 px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition"
+                >
+                  Save Changes
+                </button>
+                <button
+                  onClick={() => setEditModal(null)}
+                  className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white font-medium rounded-lg transition"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
