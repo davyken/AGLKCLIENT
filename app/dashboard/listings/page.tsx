@@ -278,7 +278,7 @@ export default function ListingsPage() {
         </div>
 
         {createModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[200] p-4">
             <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 w-full max-w-md">
               <h3 className="text-xl font-bold text-white mb-4">Create Listing</h3>
               <div className="space-y-4">
@@ -364,7 +364,7 @@ export default function ListingsPage() {
         )}
 
         {editModal && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[200] p-4">
             <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 w-full max-w-md">
               <h3 className="text-xl font-bold text-white mb-4">Edit Listing</h3>
               <div className="space-y-4">
