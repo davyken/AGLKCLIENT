@@ -56,25 +56,25 @@ export default function Home() {
       <section id="hero" className="min-h-screen pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6 flex items-center">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div className="max-w-2xl">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium mb-4 sm:mb-6">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium mb-6 sm:mb-8">
                 <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></span>
                 Production Ready
               </div>
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold leading-tight mb-4 sm:mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6 sm:mb-8">
                 Agricultural Marketplace for{' '}
                 <span className="text-emerald-400">Modern Africa</span>
               </h1>
-              <p className="text-base sm:text-xl text-gray-400 mb-6 sm:mb-8 max-w-lg">
+              <p className="text-lg sm:text-2xl text-gray-400 mb-8 sm:mb-10 max-w-2xl">
                 Connect farmers and buyers seamlessly. Manage listings, track users, 
                 and grow your agricultural business with AI-powered insights.
               </p>
-              <div className="flex flex-wrap gap-3 sm:gap-4">
+              <div className="flex flex-wrap gap-4 sm:gap-6">
                 <a 
                   href="https://wa.me/15551661836" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 sm:px-6 py-2.5 sm:py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition"
+                  className="px-6 sm:px-8 py-3 sm:py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition text-base sm:text-lg"
                 >
                   Launch App
                 </a>
@@ -82,7 +82,7 @@ export default function Home() {
                   href="https://docs.google.com/document/d/1KEBYLReFKUvULvB8uEQCu5NyaEgjDMYduOH7zXOJNNw/edit?tab=t.0#heading=h.quv1v01so6ux" 
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 sm:px-6 py-2.5 sm:py-3 border border-gray-700 hover:border-gray-600 text-gray-300 font-medium rounded-lg transition"
+                  className="px-6 sm:px-8 py-3 sm:py-4 border border-gray-700 hover:border-gray-600 text-gray-300 font-medium rounded-lg transition text-base sm:text-lg"
                 >
                   View Documentation
                 </a>
@@ -90,14 +90,14 @@ export default function Home() {
             </div>
             <div className="relative hidden lg:block">
               <div className="absolute inset-0 bg-emerald-500/20 blur-3xl rounded-full"></div>
-              <div className="relative bg-gray-900 border border-gray-800 rounded-2xl p-4 sm:p-6">
-                <div className="flex items-center gap-2 mb-4">
+              <div className="relative bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8">
+                <div className="flex items-center gap-3 mb-6">
                   <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                   <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  <span className="text-gray-500 text-sm ml-2">terminal</span>
+                  <span className="text-gray-500 text-base ml-2">terminal</span>
                 </div>
-                <pre className="text-xs sm:text-sm font-mono text-gray-300">
+                <pre className="text-sm sm:text-base font-mono text-gray-300">
                   <span className="text-emerald-400">$</span> curl https://aglk.onrender.com/api/health<br/>
                   <span className="text-gray-500">{"{"}</span><br/>
                   &nbsp;&nbsp;"status": <span className="text-emerald-400">"healthy"</span>,<br/>
