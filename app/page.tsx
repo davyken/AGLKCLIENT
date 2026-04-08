@@ -18,9 +18,15 @@ export default function Home() {
               className="w-16 sm:w-20 h-16 sm:h-20 object-contain"
             />
           </div>
-          <div className="flex items-center gap-4 sm:gap-8">
-            <a href="#features" className="hidden sm:block text-gray-400 hover:text-white transition text-sm">Features</a>
-            <a href="#about" className="hidden sm:block text-gray-400 hover:text-white transition text-sm">About</a>
+          <div className="hidden sm:flex absolute left-1/2 transform -translate-x-1/2">
+            <div className="flex items-center gap-6">
+              <Link href="#hero" className="text-gray-400 hover:text-white transition text-sm">Home</Link>
+              <a href="#about" className="text-gray-400 hover:text-white transition text-sm">About</a>
+              <a href="#features" className="text-gray-400 hover:text-white transition text-sm">Features</a>
+              <a href="#contact" className="text-gray-400 hover:text-white transition text-sm">Contact</a>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
             <Link 
               href="/auth" 
               className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium rounded-lg transition"
@@ -39,13 +45,15 @@ export default function Home() {
         </div>
         {mobileMenuOpen && (
           <div className="sm:hidden border-t border-gray-800 px-4 py-3 space-y-2">
-            <a href="#features" className="block text-gray-400 hover:text-white transition text-sm py-2">Features</a>
+            <Link href="/" className="block text-gray-400 hover:text-white transition text-sm py-2">Home</Link>
             <a href="#about" className="block text-gray-400 hover:text-white transition text-sm py-2">About</a>
+            <a href="#features" className="block text-gray-400 hover:text-white transition text-sm py-2">Features</a>
+            <a href="#contact" className="block text-gray-400 hover:text-white transition text-sm py-2">Contact</a>
           </div>
         )}
       </nav>
 
-      <section className="min-h-screen pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6 flex items-center">
+      <section id="hero" className="min-h-screen pt-24 sm:pt-28 pb-16 sm:pb-20 px-4 sm:px-6 flex items-center">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div className="max-w-2xl">
@@ -97,6 +105,57 @@ export default function Home() {
                   &nbsp;&nbsp;"version": <span className="text-blue-400">"2.0.0"</span><br/>
                   <span className="text-gray-500">{"}"}</span>
                 </pre>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="about" className="py-12 sm:py-20 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">About <span className="text-emerald-400">Us</span></h2>
+            <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
+              Connecting farmers and buyers across Africa through innovative technology
+            </p>
+          </div>
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+            <div>
+              <h3 className="text-xl sm:text-2xl font-bold mb-4">Empowering African Agriculture</h3>
+              <p className="text-gray-400 text-sm sm:text-base mb-6">
+                We are a team of 4 full-stack developers dedicated to revolutionizing agricultural trade in Africa. 
+                Our platform bridges the gap between farmers and buyers by leveraging WhatsApp and SMS - 
+                technologies that are already widely accessible across the continent.
+              </p>
+              <div className="grid sm:grid-cols-2 gap-4">
+                <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4">
+                  <div className="text-2xl mb-2">🎯</div>
+                  <h4 className="font-semibold text-sm mb-1">Our Mission</h4>
+                  <p className="text-gray-400 text-xs">Empower farmers and buyers through accessible technology</p>
+                </div>
+                <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4">
+                  <div className="text-2xl mb-2">🚀</div>
+                  <h4 className="font-semibold text-sm mb-1">Our Vision</h4>
+                  <p className="text-gray-400 text-xs">Leading agricultural trading platform in Africa</p>
+                </div>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+                <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-1">WhatsApp</div>
+                <div className="text-gray-400 text-xs sm:text-sm">+ SMS Integration</div>
+              </div>
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+                <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-1">Smart</div>
+                <div className="text-gray-400 text-xs sm:text-sm">AI Matching</div>
+              </div>
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+                <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-1">Price</div>
+                <div className="text-gray-400 text-xs sm:text-sm">Intelligence</div>
+              </div>
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+                <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-1">Real-time</div>
+                <div className="text-gray-400 text-xs sm:text-sm">Notifications</div>
               </div>
             </div>
           </div>
@@ -169,6 +228,55 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="contact" className="py-12 sm:py-20 px-4 sm:px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Get In <span className="text-emerald-400">Touch</span></h2>
+            <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
+              Have questions about our agricultural marketplace platform? We'd love to hear from you.
+            </p>
+          </div>
+          <div className="grid sm:grid-cols-3 gap-4 sm:gap-6">
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+              <div className="w-10 h-10 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold mb-1">Email</h3>
+              <p className="text-gray-400 text-sm">support@aglk.com</p>
+            </div>
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+              <div className="w-10 h-10 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold mb-1">Phone</h3>
+              <p className="text-gray-400 text-sm">+1 (555) 166-1836</p>
+            </div>
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+              <div className="w-10 h-10 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
+                <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold mb-1">Location</h3>
+              <p className="text-gray-400 text-sm">Africa</p>
+            </div>
+          </div>
+          <div className="text-center mt-8 sm:mt-10">
+            <Link 
+              href="/contact" 
+              className="inline-block px-6 sm:px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition"
+            >
+              Contact Us
+            </Link>
+          </div>
+        </div>
+      </section>
+
       <section className="pt-24 sm:pt-40 pb-12 sm:pb-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
@@ -188,6 +296,7 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Platform</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
+                <li><Link href="/about" className="hover:text-white transition">About</Link></li>
                 <li><Link href="/dashboard" className="hover:text-white transition">Dashboard</Link></li>
                 <li><Link href="/dashboard/listings" className="hover:text-white transition">Listings</Link></li>
                 <li><Link href="/dashboard/users" className="hover:text-white transition">Users</Link></li>
@@ -196,6 +305,7 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Resources</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
+                <li><Link href="/contact" className="hover:text-white transition">Contact</Link></li>
                 <li><a href="#" className="hover:text-white transition">Documentation</a></li>
                 <li><a href="#" className="hover:text-white transition">API Reference</a></li>
                 <li><a href="#" className="hover:text-white transition">Support</a></li>
