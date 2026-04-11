@@ -43,12 +43,12 @@ export default function DashboardLayout({
                   className="w-16 sm:w-20 h-16 sm:h-20 object-contain"
                 />
               </Link>
-              <Link 
+              {/* <Link 
                 href="/" 
                 className="hidden sm:inline-flex items-center bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors ml-4"
               >
                 User Side
-              </Link>
+              </Link> */}
             </div>
             <div className="hidden lg:flex absolute left-1/2 transform -translate-x-1/2">
               <div className="flex items-center gap-4">

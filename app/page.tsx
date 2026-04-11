@@ -9,6 +9,38 @@ export default function Home() {
   const [adminCode, setAdminCode] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
   const [showLaunchModal, setShowLaunchModal] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    setLoaded(true);
+    
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+    );
+
+    document.querySelectorAll('.scroll-animate, .scroll-animate-left, .scroll-animate-right, .scroll-animate-up, .scroll-animate-down, .scroll-animate-scale, .scroll-animate-zoom').forEach((el) => {
+      observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, [loaded]);
 
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,11 +52,6 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    const stored = localStorage.getItem('aglk_admin');
-    if (stored === 'true') setIsAdmin(true);
-  }, []);
-
   return (
     <div className="min-h-screen bg-gray-950 text-white">
       {/* NAVBAR - increased logo size and font sizes */}
@@ -34,30 +61,38 @@ export default function Home() {
             <img
               src="/agrolink_logo_v3.svg"
               alt="Agrolink"
-              className="object-contain"
+              className="object-contain animate-fade-in"
               style={{ width: '140px', height: '56px' }}
             />
           </div>
           <div className="hidden sm:flex absolute left-1/2 transform -translate-x-1/2">
             <div className="flex items-center gap-8">
-              <Link href="#hero" className="text-gray-400 hover:text-white transition text-base font-medium">Home</Link>
-              <a href="#about" className="text-gray-400 hover:text-white transition text-base font-medium">About</a>
-              <a href="#features" className="text-gray-400 hover:text-white transition text-base font-medium">Features</a>
-              <a href="#contact" className="text-gray-400 hover:text-white transition text-base font-medium">Contact</a>
+              <Link href="#hero" className="nav-link text-gray-400 hover:text-white transition text-base font-medium relative group">Home
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-400 transition-all duration-300 group-hover:w-full"></span>
+              </Link>
+              <a href="#about" className="nav-link text-gray-400 hover:text-white transition text-base font-medium relative group">About
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-400 transition-all duration-300 group-hover:w-full"></span>
+              </a>
+              <a href="#features" className="nav-link text-gray-400 hover:text-white transition text-base font-medium relative group">Features
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-400 transition-all duration-300 group-hover:w-full"></span>
+              </a>
+              <a href="#contact" className="nav-link text-gray-400 hover:text-white transition text-base font-medium relative group">Contact
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-emerald-400 transition-all duration-300 group-hover:w-full"></span>
+              </a>
             </div>
           </div>
           <div className="flex items-center gap-2">
             {isAdmin ? (
               <Link
                 href="/auth"
-                className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium rounded-lg transition"
+                className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/30"
               >
                 Get Started
               </Link>
             ) : (
               <button
                 onClick={() => setShowLaunchModal(true)}
-                className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium rounded-lg transition"
+                className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/30"
               >
                 Launch App
               </button>
@@ -65,7 +100,7 @@ export default function Home() {
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="sm:hidden p-2 text-gray-400 hover:text-white"
+              className="sm:hidden p-2 text-gray-400 hover:text-white transition-colors"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
@@ -74,7 +109,7 @@ export default function Home() {
           </div>
         </div>
         {mobileMenuOpen && (
-          <div className="sm:hidden border-t border-gray-800 px-4 py-3 space-y-2">
+          <div className="sm:hidden border-t border-gray-800 px-4 py-3 space-y-2 animate-slide-down">
             <Link href="/" className="block text-gray-400 hover:text-white transition text-sm py-2">Home</Link>
             <a href="#about" className="block text-gray-400 hover:text-white transition text-sm py-2">About</a>
             <a href="#features" className="block text-gray-400 hover:text-white transition text-sm py-2">Features</a>
@@ -158,13 +193,13 @@ export default function Home() {
       <section id="about" className="py-12 sm:py-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">About <span className="text-emerald-400">Us</span></h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 scroll-animate-up">About <span className="text-emerald-400">Us</span></h2>
+            <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base scroll-animate-up">
               Connecting farmers and buyers across Cameroon through innovative technology
             </p>
           </div>
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-            <div>
+            <div className="scroll-animate-left">
               <h3 className="text-xl sm:text-2xl font-bold mb-4">Empowering Cameroon Agriculture</h3>
               <p className="text-gray-400 text-sm sm:text-base mb-6">
                 We are a team of 4 full-stack developers dedicated to revolutionizing agricultural trade in Cameroon.
@@ -172,32 +207,32 @@ export default function Home() {
                 technologies that are already widely accessible across the country.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
-                <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4">
+                <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 card-hover scroll-animate-up">
                   <div className="text-2xl mb-2">🎯</div>
                   <h4 className="font-semibold text-sm mb-1">Our Mission</h4>
                   <p className="text-gray-400 text-xs">Empower farmers and buyers through accessible technology</p>
                 </div>
-                <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4">
+                <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 card-hover scroll-animate-up stagger-1">
                   <div className="text-2xl mb-2">🚀</div>
                   <h4 className="font-semibold text-sm mb-1">Our Vision</h4>
                   <p className="text-gray-400 text-xs">Leading agricultural trading platform in Cameroon</p>
                 </div>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+            <div className="grid grid-cols-2 gap-4 scroll-animate-right">
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center card-hover glow-effect">
                 <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-1">WhatsApp</div>
                 <div className="text-gray-400 text-xs sm:text-sm">+ SMS + Telegram</div>
               </div>
-              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center card-hover glow-effect">
                 <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-1">Smart</div>
                 <div className="text-gray-400 text-xs sm:text-sm">AI Matching</div>
               </div>
-              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center card-hover glow-effect">
                 <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-1">Price</div>
                 <div className="text-gray-400 text-xs sm:text-sm">Intelligence</div>
               </div>
-              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+              <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center card-hover glow-effect">
                 <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-1">Real-time</div>
                 <div className="text-gray-400 text-xs sm:text-sm">Notifications</div>
               </div>
@@ -209,8 +244,8 @@ export default function Home() {
       <section id="features" className="py-12 sm:py-20 px-4 sm:px-6 bg-gray-900/50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Platform Features</h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 scroll-animate-up">Platform Features</h2>
+            <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base scroll-animate-up">
               Built with modern technologies to handle the demands of agricultural trading at scale.
             </p>
           </div>
@@ -255,14 +290,14 @@ export default function Home() {
             ].map((feature, idx) => (
               <div
                 key={idx}
-                className={`p-4 sm:p-6 rounded-xl border transition-all duration-300 cursor-pointer ${hoveredFeature === idx
+                className={`p-4 sm:p-6 rounded-xl border transition-all duration-300 cursor-pointer card-hover scroll-animate-zoom stagger-${idx + 1} ${hoveredFeature === idx
                   ? 'bg-gray-800 border-gray-700 scale-105'
                   : 'bg-gray-900/50 border-gray-800 hover:border-gray-700'
                   }`}
                 onMouseEnter={() => setHoveredFeature(idx)}
                 onMouseLeave={() => setHoveredFeature(null)}
               >
-                <div className="text-2xl sm:text-3xl mb-3 sm:mb-4">{feature.icon}</div>
+                <div className="text-2xl sm:text-3xl mb-3 sm:mb-4 animate-float" style={{ animationDelay: `${idx * 0.2}s` }}>{feature.icon}</div>
                 <h3 className="text-base sm:text-lg font-semibold mb-2">{feature.title}</h3>
                 <p className="text-gray-400 text-sm">{feature.description}</p>
               </div>
@@ -274,13 +309,13 @@ export default function Home() {
       <section id="contact" className="py-12 sm:py-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10 sm:mb-16">
-            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">Get In <span className="text-emerald-400">Touch</span></h2>
-            <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
+            <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4 scroll-animate-up">Get In <span className="text-emerald-400">Touch</span></h2>
+            <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base scroll-animate-up">
               Have questions about our agricultural marketplace platform? We'd love to hear from you.
             </p>
           </div>
           <div className="grid sm:grid-cols-3 gap-4 sm:gap-6">
-            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center card-hover scroll-animate-up stagger-1">
               <div className="w-10 h-10 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -289,7 +324,7 @@ export default function Home() {
               <h3 className="font-semibold mb-1">Email</h3>
               <p className="text-gray-400 text-sm">support@aglk.com</p>
             </div>
-            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center card-hover scroll-animate-up stagger-2">
               <div className="w-10 h-10 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
@@ -298,7 +333,7 @@ export default function Home() {
               <h3 className="font-semibold mb-1">Phone</h3>
               <p className="text-gray-400 text-sm">+1 (555) 166-1836</p>
             </div>
-            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
+            <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center card-hover scroll-animate-up stagger-3">
               <div className="w-10 h-10 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-3">
                 <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
@@ -312,7 +347,7 @@ export default function Home() {
           <div className="text-center mt-8 sm:mt-10">
             <Link
               href="/contact"
-              className="inline-block px-6 sm:px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition"
+              className="inline-block px-6 sm:px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/30"
             >
               Contact Us
             </Link>
@@ -432,11 +467,11 @@ export default function Home() {
 
         {showLaunchModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setShowLaunchModal(false)}></div>
-            <div className="relative bg-gray-900 border border-gray-700 rounded-2xl p-6 sm:p-8 max-w-sm w-full shadow-2xl">
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm animate-fade-in" onClick={() => setShowLaunchModal(false)}></div>
+            <div className="relative bg-gray-900 border border-gray-700 rounded-2xl p-6 sm:p-8 max-w-sm w-full shadow-2xl animate-scale-in">
               <button
                 onClick={() => setShowLaunchModal(false)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-white"
+                className="absolute top-4 right-4 text-gray-400 hover:text-white transition-colors"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -449,7 +484,7 @@ export default function Home() {
                   href="https://wa.me/15551661836"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 py-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-medium rounded-lg transition"
+                  className="flex items-center justify-center gap-3 py-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-medium rounded-lg transition-all duration-300 hover:scale-105"
                 >
                   <img src="/whatsapp-icon.svg" alt="WhatsApp" className="w-6 h-6" />
                   Continue with WhatsApp
@@ -458,7 +493,7 @@ export default function Home() {
                   href="https://t.me/Agrolkbot"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-3 py-3 bg-[#29B6F6] hover:bg-[#0288D1] text-white font-medium rounded-lg transition"
+                  className="flex items-center justify-center gap-3 py-3 bg-[#29B6F6] hover:bg-[#0288D1] text-white font-medium rounded-lg transition-all duration-300 hover:scale-105"
                 >
                   <img src="/telegram-icon.svg" alt="Telegram" className="w-6 h-6" />
                   Continue with Telegram
