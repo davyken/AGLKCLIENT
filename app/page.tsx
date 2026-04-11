@@ -26,21 +26,23 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white">
+      {/* NAVBAR - increased logo size and font sizes */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
-          <div className="flex items-center gap-2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
+          <div className="flex items-center">
             <img 
-              src="/agrolink_logo_compressed.png" 
+              src="/agrolink_logo_v3.svg" 
               alt="Agrolink" 
-              className="w-16 sm:w-20 h-16 sm:h-20 object-contain"
+              className="object-contain"
+              style={{ width: '140px', height: '56px' }}
             />
           </div>
           <div className="hidden sm:flex absolute left-1/2 transform -translate-x-1/2">
-            <div className="flex items-center gap-6">
-              <Link href="#hero" className="text-gray-400 hover:text-white transition text-sm">Home</Link>
-              <a href="#about" className="text-gray-400 hover:text-white transition text-sm">About</a>
-              <a href="#features" className="text-gray-400 hover:text-white transition text-sm">Features</a>
-              <a href="#contact" className="text-gray-400 hover:text-white transition text-sm">Contact</a>
+            <div className="flex items-center gap-8">
+              <Link href="#hero" className="text-gray-400 hover:text-white transition text-base font-medium">Home</Link>
+              <a href="#about" className="text-gray-400 hover:text-white transition text-base font-medium">About</a>
+              <a href="#features" className="text-gray-400 hover:text-white transition text-base font-medium">Features</a>
+              <a href="#contact" className="text-gray-400 hover:text-white transition text-base font-medium">Contact</a>
             </div>
           </div>
           <div className="flex items-center gap-2">
@@ -312,22 +314,25 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="pt-24 sm:pt-40 pb-12 sm:pb-20 px-4 sm:px-6">
+      {/* FOOTER - same margins as navbar */}
+      <section className="pt-16 sm:pt-24 pb-12 sm:pb-20 px-4 sm:px-6">
         <div className="max-w-7xl mx-auto">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-8 sm:gap-12">
-            <div className="lg:col-span-5">
-              <div className="flex items-center gap-3 mb-4">           
-                 <img 
-                  src="/agrolink_logo_compressed.png" 
-                  alt="Agrolink" 
-                  className="w-24 sm:w-32 h-24 sm:h-32 object-contain" 
-                />
-              </div>
-              <p className="text-gray-400 max-w-lg text-sm sm:text-base">
-                Empowering African agricultural trade through technology. 
-                Connecting farmers and buyers for a sustainable future.
-              </p>
-            </div>
+          {/* Logo + description row */}
+          <div className="mb-10 sm:mb-12">
+            <img 
+              src="/agrolink_logo_v3.svg" 
+              alt="Agrolink" 
+              className="object-contain max-w-none mb-4"
+              style={{ width: '320px', height: 'auto' }}
+            />
+            <p className="text-gray-400 max-w-lg text-sm sm:text-base">
+              Empowering African agricultural trade through technology. 
+              Connecting farmers and buyers for a sustainable future.
+            </p>
+          </div>
+
+          {/* Links row */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12">
             <div>
               <h4 className="font-semibold mb-3 sm:mb-4 text-sm sm:text-base">Platform</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
@@ -393,6 +398,7 @@ export default function Home() {
               <div></div>
             )}
           </div>
+
           <div className="border-t border-gray-800 mt-10 sm:mt-12 pt-6 sm:pt-8 text-center text-gray-500 text-xs sm:text-sm">
             © 2026 AGLK. Built with NestJS & Next.js
           </div>
