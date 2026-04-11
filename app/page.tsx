@@ -8,6 +8,7 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [adminCode, setAdminCode] = useState('');
   const [isAdmin, setIsAdmin] = useState(false);
+  const [showLaunchModal, setShowLaunchModal] = useState(false);
 
   const handleAdminLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -53,7 +54,14 @@ export default function Home() {
               >
                 Get Started
               </Link>
-            ) : null}
+            ) : (
+              <button
+                onClick={() => setShowLaunchModal(true)}
+                className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium rounded-lg transition"
+              >
+                Launch App
+              </button>
+            )}
 
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -73,7 +81,9 @@ export default function Home() {
             <a href="#contact" className="block text-gray-400 hover:text-white transition text-sm py-2">Contact</a>
             {isAdmin ? (
               <Link href="/auth" className="block text-emerald-400 hover:text-white transition text-sm py-2">Get Started</Link>
-            ) : null}
+            ) : (
+              <button onClick={() => setShowLaunchModal(true)} className="block text-emerald-400 hover:text-white transition text-sm py-2">Launch App</button>
+            )}
 
           </div>
         )}
@@ -158,7 +168,7 @@ export default function Home() {
               <h3 className="text-xl sm:text-2xl font-bold mb-4">Empowering Cameroon Agriculture</h3>
               <p className="text-gray-400 text-sm sm:text-base mb-6">
                 We are a team of 4 full-stack developers dedicated to revolutionizing agricultural trade in Cameroon.
-                Our platform bridges the gap between farmers and buyers by leveraging WhatsApp and SMS -
+                Our platform bridges the gap between farmers and buyers by leveraging WhatsApp, SMS, and Telegram -
                 technologies that are already widely accessible across the country.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
@@ -177,7 +187,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-4">
               <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
                 <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-1">WhatsApp</div>
-                <div className="text-gray-400 text-xs sm:text-sm">+ SMS Integration</div>
+                <div className="text-gray-400 text-xs sm:text-sm">+ SMS + Telegram</div>
               </div>
               <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4 sm:p-6 text-center">
                 <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-1">Smart</div>
@@ -232,7 +242,7 @@ export default function Home() {
               },
               {
                 title: 'Multi-channel',
-                description: 'Support for SMS and WhatsApp integrations for wider reach and accessibility.',
+                description: 'Support for WhatsApp, SMS, and Telegram integrations for wider reach and accessibility.',
                 icon: '📱',
                 color: 'pink'
               },
@@ -367,7 +377,7 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-
+                  Cameroon
                 </li>
               </ul>
             </div>
@@ -419,6 +429,44 @@ export default function Home() {
             <img src="/telegram-icon.svg" alt="Telegram" className="w-9 h-9" />
           </a>
         </div>
+
+        {showLaunchModal && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" onClick={() => setShowLaunchModal(false)}></div>
+            <div className="relative bg-gray-900 border border-gray-700 rounded-2xl p-6 sm:p-8 max-w-sm w-full shadow-2xl">
+              <button
+                onClick={() => setShowLaunchModal(false)}
+                className="absolute top-4 right-4 text-gray-400 hover:text-white"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+              <h3 className="text-xl font-bold text-white text-center mb-2">Launch App</h3>
+              <p className="text-gray-400 text-center mb-6 text-sm">Choose your preferred channel to continue</p>
+              <div className="flex flex-col gap-3">
+                <a
+                  href="https://wa.me/15551661836"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 py-3 bg-[#25D366] hover:bg-[#1ebe5d] text-white font-medium rounded-lg transition"
+                >
+                  <img src="/whatsapp-icon.svg" alt="WhatsApp" className="w-6 h-6" />
+                  Continue with WhatsApp
+                </a>
+                <a
+                  href="https://t.me/Agrolkbot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-3 py-3 bg-[#29B6F6] hover:bg-[#0288D1] text-white font-medium rounded-lg transition"
+                >
+                  <img src="/telegram-icon.svg" alt="Telegram" className="w-6 h-6" />
+                  Continue with Telegram
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
       </section>
     </div>
   );

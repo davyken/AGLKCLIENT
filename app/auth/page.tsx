@@ -27,9 +27,9 @@ export default function AuthPage() {
     return (
       <div className="min-h-screen bg-gray-950 flex items-center justify-center">
         <img 
-          src="/agrolink_logo_compressed.png" 
+          src="/agrolink_logo_v3.svg" 
           alt="Agrolink" 
-          className="w-20 h-20 object-contain animate-spin"
+          className="w-20 h-20 object-contain"
         />
       </div>
     );
@@ -66,7 +66,7 @@ export default function AuthPage() {
       <div className="w-full max-w-md">
         <div className="flex flex-col items-center gap-2 mb-6 sm:mb-8">
           <img 
-            src="/agrolink_logo_compressed.png" 
+            src="/agrolink_logo_v3.svg" 
             alt="Agrolink" 
             className="w-24 sm:w-32 h-24 sm:h-32 object-contain"
           />

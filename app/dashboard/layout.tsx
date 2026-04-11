@@ -38,7 +38,7 @@ export default function DashboardLayout({
             <div className="flex items-center">
               <Link href="/" className="flex items-center gap-2">
                 <img 
-                  src="/agrolink_logo_compressed.png" 
+                  src="/agrolink_logo_v3.svg" 
                   alt="Agrolink" 
                   className="w-16 sm:w-20 h-16 sm:h-20 object-contain"
                 />
@@ -64,6 +64,7 @@ export default function DashboardLayout({
               <button 
                 onClick={() => {
                   localStorage.removeItem('user');
+                  localStorage.removeItem('aglk_admin');
                   router.push('/auth');
                 }}
                 className="p-2 text-gray-400 hover:text-white"

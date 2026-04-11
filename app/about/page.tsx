@@ -8,11 +8,11 @@ export default function AboutPage() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <img 
-              src="/agrolink_logo_compressed.png" 
-              alt="Agrolink" 
-              className="w-16 sm:w-20 h-16 sm:h-20 object-contain"
-            />
+              <img 
+                src="/agrolink_logo_v3.svg" 
+                alt="Agrolink" 
+                className="w-16 sm:w-20 h-16 sm:h-20 object-contain"
+              />
           </div>
           <div className="flex items-center gap-4 sm:gap-8">
             <Link href="/" className="text-gray-400 hover:text-white transition text-sm">Home</Link>
@@ -43,7 +43,7 @@ export default function AboutPage() {
             <h2 className="text-xl sm:text-2xl font-bold mb-4">Who We Are</h2>
             <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
               We are a team of 4 full-stack developers dedicated to revolutionizing agricultural trade in Cameroon. 
-              Our platform bridges the gap between farmers and buyers by leveraging the power of WhatsApp and SMS 
+              Our platform bridges the gap between farmers and buyers by leveraging the power of WhatsApp, SMS, and Telegram
               - technologies that are already widely accessible across the country.
             </p>
           </div>
@@ -54,7 +54,7 @@ export default function AboutPage() {
               <h3 className="text-lg sm:text-xl font-bold mb-3">Our Mission</h3>
               <p className="text-gray-400 text-sm sm:text-base">
                 To empower farmers and buyers by providing a seamless, accessible marketplace that works 
-                through channels they already use - WhatsApp and SMS.
+                through channels they already use - WhatsApp, SMS, and Telegram.
               </p>
             </div>
             <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8">
@@ -77,7 +77,7 @@ export default function AboutPage() {
                 <div>
                   <h4 className="font-semibold mb-1">Multi-Channel Integration</h4>
                   <p className="text-gray-400 text-sm sm:text-base">
-                    Connect with farmers and buyers via WhatsApp or SMS - same system, unified experience.
+                    Connect with farmers and buyers via WhatsApp, SMS, or Telegram - same system, unified experience.
                   </p>
                 </div>
               </div>
@@ -110,7 +110,7 @@ export default function AboutPage() {
                 <div>
                   <h4 className="font-semibold mb-1">Real-Time Notifications</h4>
                   <p className="text-gray-400 text-sm sm:text-base">
-                    Stay updated with instant notifications on your preferred channel - WhatsApp or SMS.
+                    Stay updated with instant notifications on your preferred channel - WhatsApp, SMS, or Telegram.
                   </p>
                 </div>
               </div>
@@ -121,7 +121,7 @@ export default function AboutPage() {
             <h2 className="text-xl sm:text-2xl font-bold mb-6">Key Features</h2>
             <div className="grid sm:grid-cols-2 gap-4">
               {[
-                "WhatsApp + SMS Integration",
+                "WhatsApp + SMS + Telegram Integration",
                 "User Registration",
                 "Farmer Listing Produce",
                 "Buyer Requesting Produce",

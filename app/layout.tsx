@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   title: "AGLK - Agricultural Listing & Knowledge",
   description: "Connect farmers and buyers, manage listings, and track users",
   icons: {
-    icon: "/agrolink_logo_compressed.png",
+    icon: "/agrolink_logo_v3.svg",
   },
 };
 

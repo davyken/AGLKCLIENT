@@ -23,7 +23,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <img 
-              src="/agrolink_logo_compressed.png" 
+              src="/agrolink_logo_v3.svg" 
               alt="Agrolink" 
               className="w-16 sm:w-20 h-16 sm:h-20 object-contain"
             />
