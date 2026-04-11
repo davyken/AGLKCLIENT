@@ -157,7 +157,7 @@ export default function ContactPage() {
                 </svg>
               </div>
               <h3 className="font-semibold mb-1">Location</h3>
-              <p className="text-gray-400 text-sm">Africa</p>
+              <p className="text-gray-400 text-sm">Cameroon</p>
             </div>
           </div>
         </div>

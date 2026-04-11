@@ -30,9 +30,9 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-gray-950/80 backdrop-blur-md border-b border-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex justify-between items-center">
           <div className="flex items-center">
-            <img 
-              src="/agrolink_logo_v3.svg" 
-              alt="Agrolink" 
+            <img
+              src="/agrolink_logo_v3.svg"
+              alt="Agrolink"
               className="object-contain"
               style={{ width: '140px', height: '56px' }}
             />
@@ -47,23 +47,15 @@ export default function Home() {
           </div>
           <div className="flex items-center gap-2">
             {isAdmin ? (
-              <Link 
-                href="/auth" 
+              <Link
+                href="/auth"
                 className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium rounded-lg transition"
               >
                 Get Started
               </Link>
-            ) : (
-              <a 
-                href="https://wa.me/15551661836" 
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-3 sm:px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-white text-xs sm:text-sm font-medium rounded-lg transition"
-              >
-                Launch App
-              </a>
-            )}
-            <button 
+            ) : null}
+
+            <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="sm:hidden p-2 text-gray-400 hover:text-white"
             >
@@ -81,9 +73,8 @@ export default function Home() {
             <a href="#contact" className="block text-gray-400 hover:text-white transition text-sm py-2">Contact</a>
             {isAdmin ? (
               <Link href="/auth" className="block text-emerald-400 hover:text-white transition text-sm py-2">Get Started</Link>
-            ) : (
-              <a href="https://wa.me/15551661836" target="_blank" rel="noopener noreferrer" className="block text-emerald-400 hover:text-white transition text-sm py-2">Launch App</a>
-            )}
+            ) : null}
+
           </div>
         )}
       </nav>
@@ -98,25 +89,17 @@ export default function Home() {
               </div>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-6 sm:mb-8">
                 Agricultural Marketplace for{' '}
-                <span className="text-emerald-400">Modern Africa</span>
+                <span className="text-emerald-400">Modern Cameroon</span>
               </h1>
               <p className="text-lg sm:text-2xl text-gray-400 mb-8 sm:mb-10 max-w-2xl">
-                Connect farmers and buyers seamlessly. Manage listings, track users, 
+                Connect farmers and buyers seamlessly. Manage listings, track users,
                 and grow your agricultural business with AI-powered insights.
               </p>
               <div className="flex flex-wrap gap-4 sm:gap-6">
-                {!isAdmin && (
-                  <a 
-                    href="https://wa.me/15551661836" 
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 sm:px-8 py-3 sm:py-4 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition text-base sm:text-lg"
-                  >
-                    Launch App
-                  </a>
-                )}
-                <a 
-                  href="https://docs.google.com/document/d/1KEBYLReFKUvULvB8uEQCu5NyaEgjDMYduOH7zXOJNNw/edit?tab=t.0#heading=h.quv1v01so6ux" 
+
+
+                <a
+                  href="https://docs.google.com/document/d/1KEBYLReFKUvULvB8uEQCu5NyaEgjDMYduOH7zXOJNNw/edit?tab=t.0#heading=h.quv1v01so6ux"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 sm:px-8 py-3 sm:py-4 border border-gray-700 hover:border-gray-600 text-gray-300 font-medium rounded-lg transition text-base sm:text-lg"
@@ -125,23 +108,37 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <div className="relative hidden lg:block">
-              <div className="absolute inset-0 bg-emerald-500/20 blur-3xl rounded-full"></div>
-              <div className="relative bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                  <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                  <span className="text-gray-500 text-base ml-2">terminal</span>
+            <div className="relative hidden lg:flex items-center justify-center">
+              {/* Glow effect behind image */}
+              <div className="absolute inset-0 bg-emerald-500/20 blur-3xl rounded-full scale-75"></div>
+
+              {/* Floating badge - top left */}
+              <div className="absolute top-6 left-0 z-10 bg-gray-900/90 backdrop-blur border border-gray-700 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-xl animate-bounce" style={{ animationDuration: '3s' }}>
+                <span className="text-2xl">🌾</span>
+                <div>
+                  <p className="text-white text-xs font-semibold">Live Listings</p>
+                  <p className="text-emerald-400 text-xs">+240 this week</p>
                 </div>
-                <pre className="text-sm sm:text-base font-mono text-gray-300">
-                  <span className="text-emerald-400">$</span> curl https://aglk.onrender.com/api/health<br/>
-                  <span className="text-gray-500">{"{"}</span><br/>
-                  &nbsp;&nbsp;"status": <span className="text-emerald-400">"healthy"</span>,<br/>
-                  &nbsp;&nbsp;"uptime": <span className="text-yellow-400">99.9%</span>,<br/>
-                  &nbsp;&nbsp;"version": <span className="text-blue-400">"2.0.0"</span><br/>
-                  <span className="text-gray-500">{"}"}</span>
-                </pre>
+              </div>
+
+              {/* Floating badge - bottom right */}
+              <div className="absolute bottom-10 right-0 z-10 bg-gray-900/90 backdrop-blur border border-gray-700 rounded-2xl px-4 py-3 flex items-center gap-3 shadow-xl animate-bounce" style={{ animationDuration: '4s' }}>
+                <span className="text-2xl">🤝</span>
+                <div>
+                  <p className="text-white text-xs font-semibold">Deals Closed</p>
+                  <p className="text-emerald-400 text-xs">+89 today</p>
+                </div>
+              </div>
+
+              {/* Main image */}
+              <div className="relative rounded-3xl overflow-hidden border border-gray-700/50 shadow-2xl shadow-emerald-500/10">
+                <img
+                  src="/farmer-hero.png"
+                  alt="African farmer using Agrolink"
+                  className="w-full max-w-md object-cover rounded-3xl"
+                />
+                {/* Subtle overlay gradient at bottom */}
+                <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-gray-950/80 to-transparent rounded-b-3xl"></div>
               </div>
             </div>
           </div>
@@ -153,16 +150,16 @@ export default function Home() {
           <div className="text-center mb-10 sm:mb-16">
             <h2 className="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">About <span className="text-emerald-400">Us</span></h2>
             <p className="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
-              Connecting farmers and buyers across Africa through innovative technology
+              Connecting farmers and buyers across Cameroon through innovative technology
             </p>
           </div>
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
             <div>
-              <h3 className="text-xl sm:text-2xl font-bold mb-4">Empowering African Agriculture</h3>
+              <h3 className="text-xl sm:text-2xl font-bold mb-4">Empowering Cameroon Agriculture</h3>
               <p className="text-gray-400 text-sm sm:text-base mb-6">
-                We are a team of 4 full-stack developers dedicated to revolutionizing agricultural trade in Africa. 
-                Our platform bridges the gap between farmers and buyers by leveraging WhatsApp and SMS - 
-                technologies that are already widely accessible across the continent.
+                We are a team of 4 full-stack developers dedicated to revolutionizing agricultural trade in Cameroon.
+                Our platform bridges the gap between farmers and buyers by leveraging WhatsApp and SMS -
+                technologies that are already widely accessible across the country.
               </p>
               <div className="grid sm:grid-cols-2 gap-4">
                 <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4">
@@ -173,7 +170,7 @@ export default function Home() {
                 <div className="bg-gray-900/50 border border-gray-800 rounded-xl p-4">
                   <div className="text-2xl mb-2">🚀</div>
                   <h4 className="font-semibold text-sm mb-1">Our Vision</h4>
-                  <p className="text-gray-400 text-xs">Leading agricultural trading platform in Africa</p>
+                  <p className="text-gray-400 text-xs">Leading agricultural trading platform in Cameroon</p>
                 </div>
               </div>
             </div>
@@ -246,13 +243,12 @@ export default function Home() {
                 color: 'cyan'
               }
             ].map((feature, idx) => (
-              <div 
+              <div
                 key={idx}
-                className={`p-4 sm:p-6 rounded-xl border transition-all duration-300 cursor-pointer ${
-                  hoveredFeature === idx 
-                    ? 'bg-gray-800 border-gray-700 scale-105' 
-                    : 'bg-gray-900/50 border-gray-800 hover:border-gray-700'
-                }`}
+                className={`p-4 sm:p-6 rounded-xl border transition-all duration-300 cursor-pointer ${hoveredFeature === idx
+                  ? 'bg-gray-800 border-gray-700 scale-105'
+                  : 'bg-gray-900/50 border-gray-800 hover:border-gray-700'
+                  }`}
                 onMouseEnter={() => setHoveredFeature(idx)}
                 onMouseLeave={() => setHoveredFeature(null)}
               >
@@ -300,12 +296,12 @@ export default function Home() {
                 </svg>
               </div>
               <h3 className="font-semibold mb-1">Location</h3>
-              <p className="text-gray-400 text-sm">Africa</p>
+              <p className="text-gray-400 text-sm">Cameroon</p>
             </div>
           </div>
           <div className="text-center mt-8 sm:mt-10">
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               className="inline-block px-6 sm:px-8 py-3 bg-emerald-500 hover:bg-emerald-600 text-white font-medium rounded-lg transition"
             >
               Contact Us
@@ -319,14 +315,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           {/* Logo + description row */}
           <div className="mb-10 sm:mb-12">
-            <img 
-              src="/agrolink_logo_v3.svg" 
-              alt="Agrolink" 
+            <img
+              src="/agrolink_logo_v3.svg"
+              alt="Agrolink"
               className="object-contain max-w-none mb-4"
               style={{ width: '320px', height: 'auto' }}
             />
             <p className="text-gray-400 max-w-lg text-sm sm:text-base">
-              Empowering African agricultural trade through technology. 
+              Empowering Cameroon agricultural trade through technology.
               Connecting farmers and buyers for a sustainable future.
             </p>
           </div>
@@ -371,7 +367,7 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
-                  Africa
+
                 </li>
               </ul>
             </div>
@@ -402,6 +398,26 @@ export default function Home() {
           <div className="border-t border-gray-800 mt-10 sm:mt-12 pt-6 sm:pt-8 text-center text-gray-500 text-xs sm:text-sm">
             © 2026 AGLK. Built with NestJS & Next.js
           </div>
+        </div>
+        <div className="fixed bottom-6 right-6 z-50 flex flex-col items-center gap-3">
+          <a
+            href="https://wa.me/15551661836"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#25D366] hover:bg-[#1ebe5d] shadow-xl rounded-full p-4 animate-shake hover:animate-none hover:scale-110 transition-all duration-300"
+            title="Chat on WhatsApp"
+          >
+            <img src="/whatsapp-icon.svg" alt="WhatsApp" className="w-9 h-9" />
+          </a>
+          <a
+            href="https://t.me/Agrolkbot"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-[#29B6F6] hover:bg-[#0288D1] shadow-xl rounded-full p-4 animate-shake hover:animate-none hover:scale-110 transition-all duration-300"
+            title="Chat with Agrolkbot on Telegram"
+          >
+            <img src="/telegram-icon.svg" alt="Telegram" className="w-9 h-9" />
+          </a>
         </div>
       </section>
     </div>

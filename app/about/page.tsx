@@ -35,16 +35,16 @@ export default function AboutPage() {
               About <span className="text-emerald-400">Us</span>
             </h1>
             <p className="text-gray-400 text-sm sm:text-base max-w-2xl mx-auto">
-              Connecting farmers and buyers across Africa through innovative technology
+              Connecting farmers and buyers across Cameroon through innovative technology
             </p>
           </div>
 
           <div className="bg-gray-900 border border-gray-800 rounded-2xl p-6 sm:p-8 mb-8">
             <h2 className="text-xl sm:text-2xl font-bold mb-4">Who We Are</h2>
             <p className="text-gray-400 text-sm sm:text-base leading-relaxed">
-              We are a team of 4 full-stack developers dedicated to revolutionizing agricultural trade in Africa. 
+              We are a team of 4 full-stack developers dedicated to revolutionizing agricultural trade in Cameroon. 
               Our platform bridges the gap between farmers and buyers by leveraging the power of WhatsApp and SMS 
-              - technologies that are already widely accessible across the continent.
+              - technologies that are already widely accessible across the country.
             </p>
           </div>
 
@@ -61,7 +61,7 @@ export default function AboutPage() {
               <div className="text-3xl mb-4">🚀</div>
               <h3 className="text-lg sm:text-xl font-bold mb-3">Our Vision</h3>
               <p className="text-gray-400 text-sm sm:text-base">
-                Become the leading agricultural trading platform in Africa, making farm produce accessible 
+                Become the leading agricultural trading platform in Cameroon, making farm produce accessible 
                 to every buyer and every farmer's produce visible to every buyer.
               </p>
             </div>

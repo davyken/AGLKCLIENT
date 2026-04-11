@@ -43,6 +43,12 @@ export default function DashboardLayout({
                   className="w-16 sm:w-20 h-16 sm:h-20 object-contain"
                 />
               </Link>
+              <Link 
+                href="/" 
+                className="hidden sm:inline-flex items-center bg-emerald-500 hover:bg-emerald-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition-colors ml-4"
+              >
+                User Side
+              </Link>
             </div>
             <div className="hidden lg:flex absolute left-1/2 transform -translate-x-1/2">
               <div className="flex items-center gap-4">
@@ -78,8 +84,9 @@ export default function DashboardLayout({
             </div>
           </div>
         </div>
-        {mobileMenuOpen && (
+{mobileMenuOpen && (
           <div className="lg:hidden border-t border-gray-800 px-4 py-3 space-y-2">
+            <Link href="/" className="block bg-emerald-500 hover:bg-emerald-600 text-white px-3 py-2 text-sm font-medium rounded-lg font-semibold" onClick={() => setMobileMenuOpen(false)}>Back to User Side</Link>
             <Link href="/" className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>Home</Link>
             <Link href="/about" className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>About</Link>
             <Link href="/dashboard" className="block text-gray-300 hover:text-white px-3 py-2 text-sm font-medium" onClick={() => setMobileMenuOpen(false)}>Dashboard</Link>
