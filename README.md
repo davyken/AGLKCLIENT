@@ -1,36 +1,116 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AgroLink Admin Dashboard
 
-## Getting Started
+Internal admin interface for managing the AgroLink agricultural marketplace — users, listings, and platform data.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Tech Stack
+
+| Technology | Version |
+|---|---|
+| Next.js | 14+ (App Router) |
+| TypeScript | 5+ |
+| Tailwind CSS | 3+ |
+| Geist | via `next/font` |
+
+---
+
+## Features
+
+- User management — create, edit, delete, ban/unban users
+- Listing management — create, edit, delete, change status
+- Dashboard overview — platform stats at a glance
+- Role-based display — farmer, buyer, admin, both
+
+---
+
+## Project Structure
+
+```
+├── app/                  # Next.js App Router pages and layouts
+│   ├── layout.tsx        # Root layout with font and global styles
+│   ├── page.tsx          # Dashboard home
+│   ├── users/            # User management pages
+│   └── listings/         # Listing management pages
+├── components/           # Reusable UI components
+├── lib/                  # API clients, utilities, helpers
+├── types/                # TypeScript type definitions
+└── public/               # Static assets
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Variable | Required | Description |
+|---|---|---|
+| `NEXT_PUBLIC_API_URL` | Yes | Base URL of the AgroLink backend (Render) |
+| `NEXT_PUBLIC_ADMIN_SECRET` | Yes | Admin access key for protected routes |
 
-## Learn More
+Create a `.env.local` file at the root:
 
-To learn more about Next.js, take a look at the following resources:
+```env
+NEXT_PUBLIC_API_URL=https://aglk.onrender.com
+NEXT_PUBLIC_ADMIN_SECRET=your_secret_here
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Local Setup
 
-## Deploy on Vercel
+1. Install dependencies:
+```bash
+npm install
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Create `.env.local` and fill in the variables above.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Run the development server:
+```bash
+npm run dev
+```
+
+4. Open [http://localhost:3000](http://localhost:3000)
+
+---
+
+## Build & Production
+
+```bash
+npm run build
+npm start
+```
+
+---
+
+## Deployment
+
+Deployed on Vercel. On every push to `main`, Vercel auto-deploys.
+
+To deploy manually:
+```bash
+npx vercel --prod
+```
+
+Set the environment variables in the Vercel dashboard under **Settings → Environment Variables** before deploying.
+
+---
+
+## Backend
+
+This dashboard consumes the AgroLink REST API hosted on Render:
+```
+https://aglk.onrender.com
+```
+
+Refer to the backend repo for API routes and authentication details.
+
+---
+
+## Known Limitations / TODOs
+
+- [ ] Authentication — admin login not yet implemented, access is currently open
+- [ ] Pagination — user and listing tables load all records at once
+- [ ] Image upload — listing image editing not yet supported
+- [ ] Audit log — no history of admin actions
+- [ ] Role guard — no middleware blocking non-admin access
